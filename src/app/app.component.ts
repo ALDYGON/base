@@ -11,7 +11,7 @@ export class AppComponent {
   title = 'base';
 }
 
-console.log(AppComponent);
+//console.log(AppComponent);
 
 // console.log('Bienvenidos a Typescript');
 
@@ -25,7 +25,6 @@ console.log(AppComponent);
 // ahorros = 'sin ahorros';
 // console.log(nombre, ahorros, esAlto);
 //#endregion
-
 
 //#region arreglos interfaces objetos
 // let pasatiempos: (string| number)[] = ['caminar','violin'];
@@ -66,7 +65,6 @@ console.log(AppComponent);
 // console.table(alumno);
 //#endregion
 
-
 //#region funciones (basico)
 // function sumar(a:number , b:number): number{
 //   return a + b;
@@ -97,7 +95,6 @@ console.log(AppComponent);
 // resultado = restar(15, 5, 5);
 // mostrar(resultado);
 //#endregion
-
 
 //#region metodos y objetos
 // interface cliente{
@@ -136,7 +133,6 @@ console.log(AppComponent);
 // console.table(ag01cl01);
 //#endregion
 
-
 //#region desestructuracion de objetos
 // interface Cuenta{
 //   cliente: string,
@@ -173,7 +169,6 @@ console.log(AppComponent);
 // console.log('El valor del movimiento de la cuenta es: ', Cuenta.movimiento.valorMovimiento);
 //#endregion
 
-
 //#region desestructuracion de arreglos
 // const pasatiempos: string[] = ['Ludo','Monopolio','Risk'];
 
@@ -189,7 +184,6 @@ console.log(AppComponent);
 // console.log('Pasatiempo 02: ', 'sin valor');
 // console.log('Pasatiempo 03: ', p03);
 //#endregion
-
 
 //#region trabajo con objetos - typescript
 //almacenes
@@ -223,7 +217,7 @@ console.log(AppComponent);
 //  console.table(Manejo1);
 //  console.table(Manejo2);
 
-// //productos
+//#endregion
 
 //#region uso de static y this
 // class Cafetera{
@@ -343,7 +337,6 @@ console.log(AppComponent);
 // docentes.forEach((docente) => mostrarPersona(docente));
 //#endregion
 
-
 //#region generics
 //  function queSoy<T>(valor: T){
 //   return valor;
@@ -354,63 +347,57 @@ console.log(AppComponent);
 //  let sorArreglo = quesoy([1,2,3,4,5]);
 //#endregion
 
-
 //#region decoradores
-function classDecorator<T extends {new (...args: any[]): {}}>(
-  constructor: T
-) {
-  return class extends constructor{
-    nuevaPropiedad = 'Nuevo atributo';
-    hola = 'Hola'; 
-  }
-}
+// function classDecorator<T extends {new (...args: any[]): {}}>(
+//   constructor: T
+// ) {
+//   return class extends constructor{
+//     nuevaPropiedad = 'Nuevo atributo';
+//     hola = 'Hola'; 
+//   }
+// }
 
-@classDecorator
-class Clase{
-  public Atributo: string = '123456';
+// @classDecorator
+// class Clase{
+//   public Atributo: string = '123456';
 
-  mostrar(){
-    console.log('Hola desde clase');
-  }
-}
+//   mostrar(){
+//     console.log('Hola desde clase');
+//   }
+// }
 
-console.log(Clase);
+// console.log(Clase);
 
-const clase = new Clase(); 
+// const clase = new Clase(); 
+// clase.mostrar();
 
-console.log(clase);
+// console.log(clase);
 //#endregion
 
-interface Padre{
-  nombre: string,
-  hijos?: string[]
-}
+//#region encadenamiento opcional
+// interface Padre{
+//   nombre: string,
+//   hijos?: string[]
+// }
 
-const Padre01 = {
-  nombre = 'Pedro'
-}
+// const Padre01 = {
+//   nombre = 'Pedro'
+// }
 
-const Padre02 = {
-  nombre = 'Alfredo',
-  hijos = ['Ana','Lucia']
-}
+// const Padre02 = {
+//   nombre = 'Alfredo',
+//   hijos = ['Ana','Lucia']
+// }
 
-function mostrarHijos(padre: Padre): void {
-  const cantidadHijos = padre.hijos?.length;
+// function mostrarHijos(padre: Padre): void {
+//   const cantidadHijos = padre.hijos?.length;
 
-  console.log(cantidadHijos);
-}
+//   console.log(cantidadHijos);
+// }
 
-mostrarHijos(Padre01);
-mostrarHijos(Padre02);
-
-
-
-
-
-
-
-
+// mostrarHijos(Padre01);
+// mostrarHijos(Padre02);
+//#endregion
 
 //#region trabajo TYPESCRIPT 
 // interface Producto {   //AQUI SE DETERMINA QUE ATRIBUTOS QUE TENDRA EL OBJETO PRODUCTO
