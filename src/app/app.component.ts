@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Validators } from '@angular/forms';
+//import { curso, detalleMatricula} from './interfaces'; 
 
 @Component({
   selector: 'app-root',
@@ -9,7 +11,9 @@ export class AppComponent {
   title = 'base';
 }
 
-console.log('Bienvenidos a Typescript');
+console.log(AppComponent);
+
+// console.log('Bienvenidos a Typescript');
 
 //#region variables
 // let nombre: string = 'Julieta';
@@ -340,175 +344,240 @@ console.log('Bienvenidos a Typescript');
 //#endregion
 
 
-//#region quesoy
-// function queSoy<T>(valor: T){
+//#region generics
+//  function queSoy<T>(valor: T){
 //   return valor;
-// }
+//  }
 
-// const soyString = queSoy('Hola desde typescript');
-// const soyNumero = queSoy(5);
+//  let soyString = queSoy('Hola desde typescript');
+//  let soyNumero = queSoy(5);
+//  let sorArreglo = quesoy([1,2,3,4,5]);
 //#endregion
 
 
+//#region decoradores
+function classDecorator<T extends {new (...args: any[]): {}}>(
+  constructor: T
+) {
+  return class extends constructor{
+    nuevaPropiedad = 'Nuevo atributo';
+    hola = 'Hola'; 
+  }
+}
+
+@classDecorator
+class Clase{
+  public Atributo: string = '123456';
+
+  mostrar(){
+    console.log('Hola desde clase');
+  }
+}
+
+console.log(Clase);
+
+const clase = new Clase(); 
+
+console.log(clase);
+//#endregion
+
+interface Padre{
+  nombre: string,
+  hijos?: string[]
+}
+
+const Padre01 = {
+  nombre = 'Pedro'
+}
+
+const Padre02 = {
+  nombre = 'Alfredo',
+  hijos = ['Ana','Lucia']
+}
+
+function mostrarHijos(padre: Padre): void {
+  const cantidadHijos = padre.hijos?.length;
+
+  console.log(cantidadHijos);
+}
+
+mostrarHijos(Padre01);
+mostrarHijos(Padre02);
+
+
+
+
+
+
+
+
+
 //#region trabajo TYPESCRIPT 
-interface Producto {   
-  idP: number; 
-  codProducto : string;
-  nomProducto  : string;
-  costProducto: number,
-  cambioPrecio:(valor: number) => void
-}
+// interface Producto {   //AQUI SE DETERMINA QUE ATRIBUTOS QUE TENDRA EL OBJETO PRODUCTO
+//   idP: number; 
+//   codProducto : string;
+//   nomProducto  : string;
+//   costProducto: number,
+//   cambioPrecio:(valor: number) => void //NO DEVUELVE NADA - FUNCION DE TIPO FLECHA
+// }
 
-// ALMACEN
-export default class Almacen{
-    constructor (
-      private codigoA : string,
-      private nombAlmacen : string,
-      private prodAlmacen   : Producto[] 
-    ){}
+// // ALMACENES
+// class Almacen{
+//     constructor (
+//       private codigoA : string,
+//       private nombAlmacen : string,
+//       private prodAlmacen   : Producto[] 
+//     ){}
 
-    public ingresarProducto(P : Producto){   //INGRESAR PROD
-      this.prodAlmacen.push(P);
-    }
+//     //METODOS
+//     public ingresarProducto(P : Producto){   //INGRESAR PRODUCTO
+//       this.prodAlmacen.push(P);
+//     }
     
-    public mostrarProducto(){    //MOSTRAR PRODUCTO
-      console.log("\nnombre Almacen:"+this.nombAlmacen+
-                    "\ncodigo del almacen: "+this.codigoA);
-      this.prodAlmacen.forEach(function(elemento) {
-        console.table(elemento);
-      })
-    }
+//     public mostrarProducto(){    //MOSTRAR PRODUCTO
+//       console.log("\nNombre Almacen:" + this.nombAlmacen + "\nCodigo del almacen: " + this.codigoA); // SLASH INVERTIDO n PARA SALTO DE LINEA
+//       this.prodAlmacen.forEach(function(productito) {  //FOREACH - RECORRE UN ARREGLO
+//         console.table(productito); // VISOR EN TABLA - PRODUCTITO (SINTAXIS)
+//       })
+//     }
   
-    public buscarProducto(codP : Producto){
-      let buscarProducto = false;
-      let position = 1;
-      let indiceProducto = 0;
+//     public buscarProducto(codP : Producto){  // buscar producto es un array
+//       let buscarProducto = false;
+//       let position = 1;
+//       let indiceProducto = 0;
    
-      while(!buscarProducto && indiceProducto < this.prodAlmacen.length) {
-          if(this.prodAlmacen[indiceProducto] == codP) {
-              buscarProducto = true;
-              position = indiceProducto;
-          } else {
-              indiceProducto += 1;
-          }
-      }
-      return position;
-    }
-    public buscarP(producto: Producto){  
-      let resultado = this.prodAlmacen.find((procd)=>procd.idP = producto.idP);
-      if(resultado == null){
-        return null;
-      }
-      console.log("BUSCAR PRODUCTO: ")
-      return resultado;
-      }
+//       while(!buscarProducto && indiceProducto < this.prodAlmacen.length) {  //BUSCA PRODUCTOS DENTRO DE UN ARRAY
+//           if(this.prodAlmacen[indiceProducto] == codP) {    //CONVALIDA QU EL PRODUCTO BUSCADO SEA IGUAL AL PRODUCTO DENTRO DEL ARRAY
+//               buscarProducto = true;
+//               position = indiceProducto;
+//           } else {
+//               indiceProducto += 1;
+//           }
+//       }
+//       return position;
+//     }
+//     public buscarP(producto: Producto){     //BUSCAR PRODUCTO - SE MUESTRA EN EL CUADRO LA BUSQUEDA DEL PRODUCTO
+//       let resultado = this.prodAlmacen.find((procd)=>procd.idP = producto.idP);
+//       if(resultado == null){
+//         return null;
+//       }
+//       console.log("BUSCAR PRODUCTO: ")
+//       return resultado;
+//       }
   
-    private quitarProducto(codP : Producto){
-      let posicion = this.buscarProducto(codP);
+//     public quitarProducto(codP : Producto){   //USA METODO buscarProducto
+//       let posicion = this.buscarProducto(codP);  //LET - VARIABLE USADA DENTRO DE CLASES
+//       this.prodAlmacen.splice(posicion,1); //SPLICE - ELIMINAR 
+//     }
   
-      this.prodAlmacen.splice(posicion,1);
-    }
-  
-    public moverProducto(codP : Producto, codA : Almacen){
-      let posicion = this.buscarProducto(codP);
-      if(posicion == -1){
-        console.log("Producto no encontrado en Almacen");
-      }else{
-        codA.ingresarProducto(this.prodAlmacen[posicion])
-        this.quitarProducto(codP)
-        console.log("TODO CORRECTO");
-      }
-    }
-  }
+//     public moverProducto(codP : Producto, codA : Almacen){  //
+//       let posicion = this.buscarProducto(codP);
+//       if(posicion == -1){
+//         console.log("Producto no encontrado en Almacen");
+//       }else{
+//         codA.ingresarProducto(this.prodAlmacen[posicion])
+//         this.quitarProducto(codP)
+//         console.log("TODO CORRECTO");
+//       }
+//     }
+//   }
 
-//ALMACENES
-
- const almacen01 : Almacen = new Almacen("almacen01","Almacen 01",[]);
- const almacen02 : Almacen = new Almacen("almacen02","Almacen 02",[]);
- const almacen03 : Almacen = new Almacen("almacen03","Almacen 03",[]);
- const almacen04 : Almacen = new Almacen("almacen03","Almacen 04",[]);
-
-
-//PRODUCTOS
-
-const producto01 :  Producto = {
-  idP: 1, 
-  codProducto : "PRODUCTO 1",
-  nomProducto : "AJINOMEN",
-  costProducto: 1.5,
-  cambioPrecio(valor:number) {
-    this.costProducto = valor;
-  }
-}
-
-const producto02 : Producto = {
-  idP: 2, 
-  codProducto : "PRODUCTO 2",
-  nomProducto : "TALLARIN SPAGUETTI",
-  costProducto: 2.8,
-  cambioPrecio(valor:number) {
-    this.costProducto = valor;
-  }
-}
-
-const producto03 : Producto = {
-  idP: 3, 
-  codProducto : "PRODUCTO 3",
-  nomProducto : "DURAZNO ALMIBAR",
-  costProducto: 7.9,
-  cambioPrecio(valor:number) {
-    this.costProducto = valor;
-  }
-}
-
-const producto04 : Producto = {
-  idP: 4, 
-  codProducto : "PRODUCTO 4",
-  nomProducto : "MAIZ MORADO",
-  costProducto: 2.5,
-  cambioPrecio(valor:number) {
-    this.costProducto = valor;
-  }
-}
-
-const producto05 : Producto = {
-  idP: 5, 
-  codProducto : "PRODUCTO 5",
-  nomProducto : "PAPA BLANCA",
-  costProducto: 2.3,
-  cambioPrecio(valor:number) {
-    this.costProducto = valor;
-  }
-}
-
-//CONSULTAS
-
-producto01.cambioPrecio(100)  //INGRESAR PRODUCTO Y CAMBIAR PRECIO
-producto02.cambioPrecio(20)
-
-almacen01.ingresarProducto(producto01); //ALMACEN 1
-almacen01.ingresarProducto(producto02);
-almacen02.ingresarProducto(producto03);
-almacen03.ingresarProducto(producto04);
-almacen04.ingresarProducto(producto05);
-
-almacen01.mostrarProducto();  //MOSTRAR ALMACEN01 
+// //ALMACENES
+// //ALMACEN01
+//  const almacen01 : Almacen = new Almacen("almacen01","Almacen 01",[]);
+// //ALMACEN02
+//  const almacen02 : Almacen = new Almacen("almacen02","Almacen 02",[]);
+// //ALMACEN03
+//  const almacen03 : Almacen = new Almacen("almacen03","Almacen 03",[]);
+// //ALMACEN04
+//  const almacen04 : Almacen = new Almacen("almacen03","Almacen 04",[]);
 
 
-almacen02.mostrarProducto();  //MOSTRAR ALMACEN02
+// //PRODUCTOS
+// //PRODUCTO01
+// const producto01 :  Producto = {   
+//   idP: 1, 
+//   codProducto : "PRODUCTO 1",
+//   nomProducto : "AJINOMEN",
+//   costProducto: 1.5,
+//   cambioPrecio(valor:number) {
+//     this.costProducto = valor;
+//   }
+// }
+// //PRODUCTO02
+// const producto02 : Producto = {
+//   idP: 2, 
+//   codProducto : "PRODUCTO 2",
+//   nomProducto : "TALLARIN SPAGUETTI",
+//   costProducto: 2.8,
+//   cambioPrecio(valor:number) {
+//     this.costProducto = valor;
+//   }
+// }
+// //PRODUCTO03
+// const producto03 : Producto = {
+//   idP: 3, 
+//   codProducto : "PRODUCTO 3",
+//   nomProducto : "DURAZNO ALMIBAR",
+//   costProducto: 7.9,
+//   cambioPrecio(valor:number) {
+//     this.costProducto = valor;
+//   }
+// }
+// //PRODUCTO04
+// const producto04 : Producto = {
+//   idP: 4, 
+//   codProducto : "PRODUCTO 4",
+//   nomProducto : "MAIZ MORADO",
+//   costProducto: 2.5,
+//   cambioPrecio(valor:number) {
+//     this.costProducto = valor;
+//   }
+// }
+// //PRODUCTO05
+// const producto05 : Producto = {
+//   idP: 5, 
+//   codProducto : "PRODUCTO 5",
+//   nomProducto : "PAPA BLANCA",
+//   costProducto: 2.3,
+//   cambioPrecio(valor:number) {
+//     this.costProducto = valor;
+//   }
+// }
+
+// //CONSULTAS
+
+// producto04.cambioPrecio(10)  //INGRESAR PRODUCTO Y CAMBIAR PRECIO
+// producto03.cambioPrecio(15.5)  
+// producto05.cambioPrecio(5.9)
 
 
-almacen03.mostrarProducto(); //MOSTRAR ALMACEN03
+// almacen01.ingresarProducto(producto01); //ALMACEN 1
+// almacen01.ingresarProducto(producto02);
+
+// almacen02.ingresarProducto(producto03); //ALMACEN 2
+
+// almacen03.ingresarProducto(producto04); //ALMACEN 3
+
+// almacen04.ingresarProducto(producto05); //ALMACEN 4
 
 
-almacen04.mostrarProducto(); //MOSTRAR ALMACEN04
+// almacen01.mostrarProducto();  //MOSTRAR ALMACEN01 
+// almacen02.mostrarProducto();  //MOSTRAR ALMACEN02
+// almacen03.mostrarProducto(); //MOSTRAR ALMACEN03
+// almacen04.mostrarProducto(); //MOSTRAR ALMACEN04
 
-almacen01.moverProducto(producto02,almacen02);  //MOVIMIENTO DE ALMACENES
-almacen01.moverProducto(producto02,almacen02);
-almacen04.moverProducto(producto05,almacen03);
 
-almacen02.mostrarProducto();  //MOSTRAR ALMACEN MOVIDO
-almacen03.mostrarProducto();
+// almacen01.moverProducto(producto02,almacen02);  //MOVIMIENTO DE ALMACENES DE 01 A 02
+// almacen03.moverProducto(producto04,almacen04);  //MOVIMIENTO DE ALMACENES DE 03 A 04
+// almacen04.moverProducto(producto05,almacen01);  //MOVIMIENTO DE ALMACENES DE 04 A 01
 
-console.table(almacen01.buscarP(producto01))  //BUSQUEDA DE PRODUCTO
 
+// almacen02.mostrarProducto();  //MOSTRAR ALMACEN MOVIDO
+// almacen04.mostrarProducto();
+// almacen01.mostrarProducto();
+
+
+// console.table(almacen01.buscarP(producto01))  //BUSQUEDA DE PRODUCTO 01 EN ALMACEN 01
+// console.table(almacen03.buscarP(producto04))  //BUSQUEDA DE PRODUCTO 04 EN ALMACEN 03
+//#endregion
