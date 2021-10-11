@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AgregadorComponet } from './agregador.component/agregador.component';
 
 import { AppComponent } from './app.component';
-import { ClienteComponent } from './cliente/cliente.component';
+import { ClienteComponent } from './clientes/cliente/cliente.component';
+import { ListaclientesComponent } from './clientes/listaclientes/listaclientes.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AgregadorComponet,
-    ClienteComponent
+    ClienteComponent,
+    ListaclientesComponent
   ],
   imports: [
     BrowserModule
