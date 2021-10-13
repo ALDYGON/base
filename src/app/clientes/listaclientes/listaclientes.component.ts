@@ -26,6 +26,15 @@ export class ListaclientesComponent implements OnInit {
   }
 
   eliminarElemento(): void{
-    this.clienteEliminado = this.clientes.shift() || "sin valor";
+    this.clienteEliminado = this.clientes.shift() || " ";
   }
 }
+
+
+
+
+
+
+
+
+
